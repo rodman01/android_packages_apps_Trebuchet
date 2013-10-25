@@ -153,22 +153,22 @@ public class Preferences extends PreferenceActivity
     }
 
     public static class DrawerFragment extends PreferenceFragment {
-        private static Preference mDrawerColor;
+        private static Preference mGeneralColor;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
             addPreferencesFromResource(R.xml.preferences_drawer);
-            mDrawerColor = (Preference) findPreference("ui_drawer_background");
+            mGeneralColor = (Preference) findPreference("ui_drawer_background");
         }
 
         public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
             boolean value;
 
-            if (preference == mDrawerColor) {
+            if (preference == mGeneralColor) {
                 ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
-                        mDrawerColorListener, PreferencesProvider.Interface.Drawer.getDrawerColor());
+                        mGeneralColorListener, PreferencesProvider.Interface.Drawer.getGeneralColor());
                 cp.setDefaultColor(0xff000000);
                 cp.show();
                 return true;
@@ -176,7 +176,7 @@ public class Preferences extends PreferenceActivity
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
 
-        ColorPickerDialog.OnColorChangedListener mDrawerColorListener =
+        ColorPickerDialog.OnColorChangedListener mGeneralColorListener =
             new ColorPickerDialog.OnColorChangedListener() {
                 public void colorChanged(int color) {
                     mPreferences.edit().putInt("ui_drawer_background",

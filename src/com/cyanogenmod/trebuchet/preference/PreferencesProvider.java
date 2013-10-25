@@ -173,7 +173,7 @@ public final class PreferencesProvider {
             public static int getIconScale(int def) {
                 return getInt("ui_drawer_icon_scale", def);
             }
-            public static int getDrawerColor() {
+            public static int getGeneralColor() {
                 return getInt("ui_drawer_background", 0xFF000000);
             }
             public static int getWidgetCountX(int def) {
