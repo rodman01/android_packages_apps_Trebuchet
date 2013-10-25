@@ -436,7 +436,7 @@ public final class Launcher extends Activity
         mHomescreenSwipeUp = PreferencesProvider.Interface.Gestures.getHomescreenSwipeUp();
         mHomescreenSwipeDown = PreferencesProvider.Interface.Gestures.getHomescreenSwipeDown();
         mFadeOutDrawer = PreferencesProvider.Interface.Drawer.getFadeOut();
-        if (PreferencesProvider.Interface.Drawer.getDrawerColor() == 0xFF000000) {
+        if (PreferencesProvider.Interface.Drawer.getGeneralColor() == 0xFF000000) {
 			mDrawerShowWallpaper = false;
         } else {
             mDrawerShowWallpaper = true;
@@ -1179,7 +1179,7 @@ public final class Launcher extends Activity
             mAppsCustomizeTabHost.setBackgroundColor(0xFF000000);
         } else {
             mAppsCustomizeTabHost.setBackgroundColor(
-                    PreferencesProvider.Interface.Drawer.getDrawerColor());
+                    PreferencesProvider.Interface.Drawer.getGeneralColor());
         }
 
         mAppsCustomizeContent = (AppsCustomizePagedView)
@@ -2030,35 +2030,37 @@ public final class Launcher extends Activity
         help.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
 
+        menu.add(0, MENU_LOCK_WORKSPACE, 0, !mLockWorkspace ? R.string.menu_lock_workspace : R.string.menu_unlock_workspace)
+            .setAlphabeticShortcut('L');
+
+        menu.add(MENU_GROUP_WALLPAPER, MENU_WALLPAPER_SETTINGS, 0, R.string.menu_wallpaper)
+            .setIcon(android.R.drawable.ic_menu_gallery)
+            .setAlphabeticShortcut('W');
+
         menu.add(MENU_GROUP_DRAWER, MENU_DRAWER, 0, R.string.menu_app_drawer)
             .setIcon(android.R.drawable.ic_menu_preferences)
             .setAlphabeticShortcut('D')
             .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        showAllApps(true);
-                        return true;
-                    }
+            public boolean onMenuItemClick(MenuItem item) {
+            showAllApps(true);
+            return true;
+            }
             });
-        menu.add(0, MENU_LOCK_WORKSPACE, 0, !mLockWorkspace ? R.string.menu_lock_workspace : R.string.menu_unlock_workspace)
-            .setAlphabeticShortcut('L');
+
         menu.add(0, MENU_MANAGE_APPS, 0, R.string.menu_manage_apps)
             .setIcon(android.R.drawable.ic_menu_manage)
             .setIntent(manageApps)
             .setAlphabeticShortcut('A');
-
-        menu.add(0, MENU_SYSTEM_SETTINGS, 0, R.string.menu_settings)
-            .setIcon(android.R.drawable.ic_menu_preferences)
-            .setIntent(settings)
-            .setAlphabeticShortcut('S');
 
         menu.add(0, MENU_PREFERENCES, 0, R.string.menu_preferences)
             .setIcon(android.R.drawable.ic_menu_preferences)
             .setIntent(preferences)
             .setAlphabeticShortcut('P');
 
-        menu.add(MENU_GROUP_WALLPAPER, MENU_WALLPAPER_SETTINGS, 0, R.string.menu_wallpaper)
-            .setIcon(android.R.drawable.ic_menu_gallery)
-            .setAlphabeticShortcut('W');
+        menu.add(0, MENU_SYSTEM_SETTINGS, 0, R.string.menu_settings)
+            .setIcon(android.R.drawable.ic_menu_preferences)
+            .setIntent(settings)
+            .setAlphabeticShortcut('S');
 
         if (!helpUrl.isEmpty()) {
             menu.add(0, MENU_HELP, 0, R.string.menu_help)
@@ -2088,9 +2090,9 @@ public final class Launcher extends Activity
         ActivityInfo defaultLauncher = getPackageManager().resolveActivity(launcherIntent, PackageManager.MATCH_DEFAULT_ONLY).activityInfo;
         // Hide preferences if not on CyanogenMod or not default launcher
         // (in which case preferences don't get shown in system settings)
-        boolean preferencesVisible = !getPackageManager().hasSystemFeature("com.cyanogenmod.android") ||
-                !defaultLauncher.packageName.equals(getClass().getPackage().getName());
-        menu.findItem(MENU_PREFERENCES).setVisible(preferencesVisible);
+        // boolean preferencesVisible = !getPackageManager().hasSystemFeature("com.cyanogenmod.android") ||
+         //       !defaultLauncher.packageName.equals(getClass().getPackage().getName());
+        //menu.findItem(MENU_PREFERENCES).setVisible(preferencesVisible);
         return true;
     }
 
