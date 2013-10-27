@@ -1187,7 +1187,7 @@ public class Workspace extends PagedView
         if (updateNow) {
             mWallpaperScrollX = mWallpaperInterpolator.getCurrX();
             mWallpaperScrollY = mWallpaperInterpolator.getCurrY();
-            if (!mWallpaperHack && mWindowToken != null) {
+            if (mWallpaperBitmap == null && mWindowToken != null) {
                 mWallpaperManager.setWallpaperOffsets(mWindowToken, mWallpaperScrollX, mWallpaperScrollY);
             }
         }
@@ -1634,7 +1634,6 @@ public class Workspace extends PagedView
                     // On large screens we need to fade the page as it nears its leftmost position
                     alpha = mLeftScreenAlphaInterpolator.getInterpolation(1 - scrollProgress);
                 }
-
                 cl.setTranslationX(translationX);
                 cl.setScaleX(scale);
                 cl.setScaleY(scale);
